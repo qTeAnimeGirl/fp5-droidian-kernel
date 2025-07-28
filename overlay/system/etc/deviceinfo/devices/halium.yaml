@@ -25,3 +25,4 @@ FP5:
   DoubleTapToWake: "/sys/devices/platform/goodix_ts.0/gesture/double_en|1|0"
   OfonoPlugin: binder
   OfonoImplementsIms: true
+  FilesystemEncryption: true
