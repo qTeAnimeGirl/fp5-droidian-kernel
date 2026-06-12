@@ -27,4 +27,12 @@ FP5:
   OfonoImplementsIms: true
   FilesystemEncryption: true
   RepowerdQtiPerfBooster: true
-  DisplayCutouts: "105;0,0,50,105/566,0,91,105/1174,0,50,105;0,0,30,168/565,0,91,168/1194,0,30,168"
+  CollapsedPanelHeight: 105
+  DisplayCutoutsCollapsed:
+    - 0 0 50 105
+    - 566 0 91 105
+    - 1174 0 50 105
+  DisplayCutoutsExpanded:
+    - 0 0 30 168
+    - 565 0 91 168
+    - 1194 0 30 168
