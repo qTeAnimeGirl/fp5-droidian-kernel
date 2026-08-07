@@ -9,6 +9,7 @@ deviceinfo_kernel_cmdline="console=ttyMSM0,115200n8 androidboot.hardware=qcom an
 deviceinfo_kernel_clang_compile="true"
 deviceinfo_kernel_llvm_compile="true"
 deviceinfo_halium_version="11"
+deviceinfo_use_overlaystore="true"
 
 deviceinfo_flash_pagesize="4096"
 deviceinfo_flash_offset_base="0x00000000"
