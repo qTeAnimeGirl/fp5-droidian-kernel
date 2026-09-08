@@ -51,9 +51,66 @@ PLATFORM_VENDOR_URL="${GERRIT_URL}/platform/vendor"
 # Generate fp5_ALLYES_GKI.config from fp5_GKI.config
 ./scripts/gki/fragment_allyesconfig.sh arch/arm64/configs/vendor/fp5_GKI.config arch/arm64/configs/vendor/fp5_ALLYES_GKI.config
 
+# *** NEW: Create Droidian config fragment ***
+echo "Creating Droidian kernel config fragment..."
+cat > arch/arm64/configs/vendor/droidian.config << 'DROIDIAN_EOF'
+# Droidian required kernel options
+CONFIG_DEVTMPFS=y
+CONFIG_VT=y
+CONFIG_NAMESPACES=y
+CONFIG_MODULES=y
+CONFIG_DEVPTS_MULTIPLE_INSTANCES=y
+CONFIG_USB_CONFIGFS_RNDIS=y
+CONFIG_USB_CONFIGFS_RMNET_BAM=y
+CONFIG_USB_CONFIGFS_MASS_STORAGE=y
+CONFIG_INIT_STACK_ALL_ZERO=y
+CONFIG_ANDROID_PARANOID_NETWORK=n
+CONFIG_ANDROID_BINDERFS=n
+
+# Namespace support
+CONFIG_SYSVIPC=y
+CONFIG_PID_NS=y
+CONFIG_IPC_NS=y
+CONFIG_UTS_NS=y
+
+# Bluetooth support
+CONFIG_BT=y
+CONFIG_BT_HIDP=y
+CONFIG_BT_RFCOMM=y
+CONFIG_BT_RFCOMM_TTY=y
+CONFIG_BT_BNEP=y
+CONFIG_BT_BNEP_MC_FILTER=y
+CONFIG_BT_BNEP_PROTO_FILTER=y
+CONFIG_BT_HCIVHCI=y
+
+# Waydroid support
+CONFIG_SW_SYNC_USER=y
+CONFIG_NET_CLS_CGROUP=y
+CONFIG_CGROUP_NET_CLASSID=y
+CONFIG_VETH=y
+CONFIG_NETFILTER_XT_TARGET_CHECKSUM=y
+CONFIG_ANDROID_BINDER_DEVICES="binder,hwbinder,vndbinder,anbox-binder,anbox-hwbinder,anbox-vndbinder"
+
+# Debug support
+CONFIG_PSTORE=y
+CONFIG_PSTORE_CONSOLE=y
+CONFIG_PSTORE_RAM=y
+CONFIG_PSTORE_RAM_ANNOTATION_APPEND=y
+
+DROIDIAN_EOF
+echo "Droidian config fragment created at arch/arm64/configs/vendor/droidian.config"
+
 # Workaround for symlinks in techpack folder
 mkdir -p "../../kernel"
 ln -sf "$(pwd)" "../../kernel/msm-5.4"
+
+echo "=== Kernel configuration setup complete ==="
+echo "Created Droidian config fragment at: arch/arm64/configs/vendor/droidian.config"
+echo "Configuration includes:"
+echo "- Basic Droidian requirements"
+echo "- Bluetooth support"
+echo "- Waydroid support"
+echo "- Namespace support"
 
 cd "$HERE"
 
