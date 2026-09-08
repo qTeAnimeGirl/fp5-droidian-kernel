@@ -1,0 +1,44 @@
+name: Build and Upload Partitions
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events for "master" or "main" branches
+  push:
+    branches: [ "master", "main" ]
+  pull_request:
+    branches: [ "master", "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Installs all required apt and pip dependencies
+      - name: Install dependencies
+        run: |
+          sudo apt update
+          sudo apt install -y git build-essential bc flex bison libssl-dev android-tools-fastboot android-tools-adb python3 python3-pip
+          pip3 install --user gitpython requests
+
+      # Executes the build script
+      - name: Run build script
+        run: |
+          # Ensuring the script is executable before running
+          chmod +x build.sh
+          ./build.sh
+
+      # Uploads the generated files to GitHub so you can download them
+      - name: Upload partitions
+        uses: actions/upload-artifact@v4
+        with:
+          name: partition-files
+          path: workdir/tmp/partitions/*
+          # Optional: How long to keep the artifact before it auto-deletes (max 90)
+          retention-days: 7
